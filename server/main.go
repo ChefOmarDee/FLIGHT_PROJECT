@@ -1,9 +1,9 @@
 package main
 
 import (
-	// 	"net/http"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
-	// 	"errors"
 )
 
 type ticket struct {
@@ -24,10 +24,25 @@ var tickets = []ticket{
 	},
 }
 
-func GetBook(c *gin.Context) {
+func AskQuestions() {
 
+}
+func GetTicket(c *gin.Context) {
+	c.IndentedJSON(http.StatusOK, tickets)
+}
+func AddTicket(c *gin.Context) {
+	var newTicket ticket
+
+	if err := c.BindJSON(&newTicket); err != nil {
+		return
+	}
+	tickets = append(tickets, newTicket)
+	c.IndentedJSON(http.StatusCreated, newTicket)
 }
 
 func main() {
 	router := gin.Default()
+	router.GET("/tickets", GetTicket)
+	router.POST("/tickets", AddTicket)
+	router.Run("localhost:8080")
 }
