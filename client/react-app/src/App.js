@@ -2,15 +2,13 @@ import './App.css';
 import React from 'react';
 import axios from 'axios';
 function App() {
-
-  async function fetchData() {
-    return axios.get("https://randomuser.me/api/")
-      .then((response) => console.log(response.data));
-  }
-  let result = fetchData();
+  axios
+    .get("http://127.0.0.1:8080/tickets")
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
   return (
     <React.Fragment>
-      <p>{result}</p>
+      <p>jojo</p>
     </React.Fragment>
   );
 }

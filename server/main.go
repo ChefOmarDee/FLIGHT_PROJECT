@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -42,6 +43,7 @@ func AddTicket(c *gin.Context) {
 
 func main() {
 	router := gin.Default()
+	router.Use(cors.Default())
 	router.GET("/tickets", GetTicket)
 	router.POST("/tickets", AddTicket)
 	router.Run("localhost:8080")
