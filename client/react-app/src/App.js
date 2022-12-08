@@ -23,7 +23,7 @@ function App() {
     }
     getData()
   }, [])
-  console.log(arr[0])
+
   return (
     <React.Fragment>
       <p>afl123{console.log(arr[0])}</p>
