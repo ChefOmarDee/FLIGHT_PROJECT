@@ -14,12 +14,12 @@ function App() {
     getData()
   }, [])
 
-  //console.log(typeof obj)
-  
+  console.log(obj)
+
 
   return (
     <React.Fragment>
-      <p>afl123{obj}</p>
+      <p>{obj}</p>
     </React.Fragment>
   );
 }
