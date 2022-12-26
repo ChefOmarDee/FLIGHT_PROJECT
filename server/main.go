@@ -25,9 +25,6 @@ var tickets = []ticket{
 	},
 }
 
-func AskQuestions() {
-
-}
 func GetTicket(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, tickets)
 }
@@ -42,6 +39,7 @@ func AddTicket(c *gin.Context) {
 }
 
 func main() {
+
 	router := gin.Default()
 	router.Use(cors.Default())
 	router.GET("/tickets", GetTicket)
