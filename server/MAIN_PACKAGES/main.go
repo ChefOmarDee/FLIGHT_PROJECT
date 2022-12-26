@@ -25,6 +25,14 @@ var tickets = []ticket{
 	},
 }
 
+func main() {
+	router := gin.Default()
+	router.Use(cors.Default())
+	router.GET("/tickets", GetTicket)
+	router.POST("/tickets", AddTicket)
+	router.Run("localhost:8080")
+}
+
 func GetTicket(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, tickets)
 }
@@ -36,13 +44,4 @@ func AddTicket(c *gin.Context) {
 	}
 	tickets = append(tickets, newTicket)
 	c.IndentedJSON(http.StatusCreated, newTicket)
-}
-
-func main() {
-
-	router := gin.Default()
-	router.Use(cors.Default())
-	router.GET("/tickets", GetTicket)
-	router.POST("/tickets", AddTicket)
-	router.Run("localhost:8080")
 }
