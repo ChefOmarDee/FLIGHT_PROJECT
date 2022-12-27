@@ -4,25 +4,27 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/gocolly/colly"
 )
 
-func askQuestions(source *string, destination *string) {
-	fmt.Println("Which city and state would you like to fly from?")
-	fmt.Scanln(source)
-	fmt.Println("Which city and state would you like to fly to?")
-	fmt.Scanln(destination)
+type flightInfo struct {
+	flightPrice   int
+	flightTime    string
+	flightAirline string
 }
+
 func main() {
 	var source []string
-	var so string = ""
-	var de string = ""
+	var so string = "San+Francisco,CA"
+	var de string = "Atlanta,GA"
 	var flag int = 1
 	var count int = 0
-	var price string = ""
-	askQuestions(&so, &de)
+	var tempIndex int
+	var tempStrings string
+	var bookedFlightInfo flightInfo
 	c := colly.NewCollector(
 		colly.AllowedDomains("bing.com", "www.bing.com"),
 	)
@@ -42,8 +44,8 @@ func main() {
 		fmt.Print("we are in\n")
 		flag = 1
 	})
-	so = "https://www.bing.com/search?q=what+is+" + so + "+airport+IATA+code"
-	de = "https://www.bing.com/search?q=what+is+" + de + "+airport+IATA+code"
+	so = "https://www.bing.com/search?q=" + so + "+IATA+code"
+	de = "https://www.bing.com/search?q=" + de + "+IATA+code"
 	fmt.Printf(so)
 	fmt.Printf(de)
 	c.Visit(so)
@@ -62,16 +64,30 @@ func main() {
 		defer res.Body.Close()
 		body, _ := ioutil.ReadAll(res.Body)
 
-		fmt.Println(res)
+		// fmt.Println(res)
 		flightData := strings.Split(string(body), ",")
 		for _, v := range flightData {
-			if strings.Contains(v, "fare") {
-				fmt.Println(v)
-				price = v
+			if strings.Contains(v, "baseline_total_fare_per_ticket") {
+				var tempIndex int = strings.Index(v, ":") + 1
+				var tempStrings string = v[tempIndex:(len(v))]
+				TEMP, _ := strconv.ParseFloat(tempStrings, 64)
+				bookedFlightInfo.flightPrice = int(TEMP)
+				fmt.Print("\n", bookedFlightInfo.flightPrice, "\n")
+			} else if strings.Contains(v, "\"marketing_airline\"") {
+				tempIndex = strings.Index(v, ":") + 2
+				tempStrings = v[tempIndex : (len(v))-1]
+				bookedFlightInfo.flightAirline = tempStrings
+				fmt.Print("\n", bookedFlightInfo.flightAirline, "\n")
+				//fmt.Println("\n", v)
+			} else if strings.Contains(v, "\"duration\"") {
+				tempIndex = strings.Index(v, ":") + 2
+				tempStrings = v[tempIndex : (len(v))-1]
+				bookedFlightInfo.flightTime = tempStrings
+				fmt.Print("\n", bookedFlightInfo.flightTime, "\n")
 			}
 		}
 		print(len(flightData))
 	}
 	fmt.Printf("%v", source)
-	print(price)
+	//print(price)
 }
