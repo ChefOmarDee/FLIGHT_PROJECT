@@ -26,6 +26,7 @@ var tickets = []ticket{
 }
 
 func main() {
+	scraper()
 	router := gin.Default()
 	router.Use(cors.Default())
 	router.GET("/tickets", GetTicket)
