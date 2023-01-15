@@ -18,6 +18,8 @@ type flightInfo struct {
 
 func scraper() {
 	var source []string
+	var tempTimeSo string = "Miami,+FL"
+	var tempTimeDe string = "San+Jose,+CA"
 	var so string = "Miami,FL"
 	var de string = "San+Jose,CA"
 	var flag int = 1
@@ -25,6 +27,13 @@ func scraper() {
 	var tempIndex int
 	var tempStrings string
 	var bookedFlightInfo flightInfo
+	d := colly.NewCollector(
+		colly.AllowedDomains("www.travelmath.com", "travelmath.com"),
+	)
+	d.OnHTML("h3", func(h *colly.HTMLElement) {
+		bookedFlightInfo.flightTime = h.Text
+		print(h.Text)
+	})
 	c := colly.NewCollector(
 		colly.AllowedDomains("bing.com", "www.bing.com"),
 	)
@@ -50,6 +59,7 @@ func scraper() {
 	fmt.Printf(de)
 	c.Visit(so)
 	c.Visit(de)
+	d.Visit("https://www.travelmath.com/flying-time/from/" + tempTimeSo + "/to/" + tempTimeDe)
 	print(count)
 	if count == 2 {
 		url := "https://priceline-com-provider.p.rapidapi.com/v2/flight/departures?sid=iSiX639&departure_date=2023-02-25&adults=1&origin_airport_code=" + source[0] + "&destination_airport_code=" + source[1] + "&results_per_page=1"
@@ -83,6 +93,7 @@ func scraper() {
 			}
 		}
 	}
+
 	fmt.Printf("%v", source)
 	fmt.Print("\n", bookedFlightInfo.flightAirline, "\n")
 	fmt.Print("\n", bookedFlightInfo.flightPrice, "\n")

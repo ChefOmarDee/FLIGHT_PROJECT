@@ -11,7 +11,6 @@ type ticket struct {
 	SourceLocation      string `json:"sourcelocation"`
 	DestinationLocation string `json:"destinationlocation"`
 	SourceDate          string `json:"sourcedate"`
-	DestinationDate     string `json:"destinationdate"`
 	PassengerCount      int    `json:"passengercount"`
 }
 
@@ -20,7 +19,6 @@ var tickets = []ticket{
 		SourceLocation:      "Vero Beach, FL",
 		DestinationLocation: "Kansas City, MO",
 		SourceDate:          "12/12/2022",
-		DestinationDate:     "12/13/2022",
 		PassengerCount:      1,
 	},
 }
