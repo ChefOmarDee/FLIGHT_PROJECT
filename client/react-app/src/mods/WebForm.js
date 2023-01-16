@@ -9,9 +9,7 @@ let WebForm =()=>{
             sourcedate:(event.target[4].value),
             sourcelocation:(event.target[0].value+event.target[1].value)
         }
-        console.log(formData)
         let submitForm = async(formData)=>{
-            console.log(formData)
             let userFlightData= await fetch('http://localhost:8080/tickets',{
                 method:'POST',
                 headers:{
@@ -20,11 +18,8 @@ let WebForm =()=>{
                 body: JSON.stringify(formData)
             })
             let userFlightDataInJson= await userFlightData.json()
-            console.log(userFlightDataInJson)
-
         }   
         submitForm(formData)
-
     }
     return (
     <React.Fragment>

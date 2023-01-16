@@ -24,7 +24,7 @@ type bookedTicket struct {
 	FlightAirline       string `json:"flightairline"`
 }
 
-var tickets = []bookedTicket{}
+// var tickets = bookedTicket{}
 var flightBooking bookedTicket
 var userBookedTicket flightInfo
 
@@ -37,7 +37,7 @@ func main() {
 }
 
 func GetTicket(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, tickets)
+	c.IndentedJSON(http.StatusOK, flightBooking)
 }
 func AddTicket(c *gin.Context) {
 	var newTicket ticket
@@ -62,5 +62,4 @@ func AddTicket(c *gin.Context) {
 	print("\nyyyyyyyyyyyyyyyyy")
 	fmt.Print(flightBooking)
 	print("\nyyyyyyyyyyyyyyyyy")
-	tickets = append(tickets, flightBooking)
 }
