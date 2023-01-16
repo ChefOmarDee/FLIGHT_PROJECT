@@ -1,17 +1,8 @@
 import React,{useState} from 'react'
 let WebForm =()=>{
     console.log("yippie")
-    // let [flightOrigin,setFlightOrigin]=useState('')
-    // let [flightDest,setFlightDest]=useState('')
-    // let [flightDate,setFlightDate]=useState('')
-    // let [flightPassengerCount,setFlightPassengerCount]=useState('')
     let submitHandler=(event)=>{
         event.preventDefault();
-        // setFlightOrigin(event.target[0].value+event.target[1].value)
-        // setFlightDest(event.target[2].value+event.target[3].value)
-        // setFlightDate(event.target[4].value)
-        // setFlightPassengerCount(event.target[5].value)
-        // console.log(flightDate)
         let formData={
             destinationlocation:(event.target[2].value+event.target[3].value),
             passengercount:3,

@@ -16,12 +16,18 @@ type flightInfo struct {
 	flightAirline string
 }
 
-func scraper() {
+func scraper(sourceLocation string, destinationLocation string, sourceDate string, passengerCount int) flightInfo {
 	var source []string
-	var tempTimeSo string = "Miami,+FL"
-	var tempTimeDe string = "San+Jose,+CA"
-	var so string = "Miami,FL"
-	var de string = "San+Jose,CA"
+	sourceLocation = strings.ReplaceAll(sourceLocation, " ", "+")
+	destinationLocation = strings.ReplaceAll(destinationLocation, " ", "+")
+	index := len(sourceLocation) - 2
+	tempTimeSo := sourceLocation[:index] + ",+" + sourceLocation[index:]
+	index = len(destinationLocation) - 2
+	tempTimeDe := destinationLocation[:index] + ",+" + destinationLocation[index:]
+	index = len(sourceLocation) - 2
+	var so string = sourceLocation[:index] + "," + sourceLocation[index:]
+	index = len(destinationLocation) - 2
+	var de string = destinationLocation[:index] + "," + destinationLocation[index:]
 	var flag int = 1
 	var count int = 0
 	var tempIndex int
@@ -62,7 +68,7 @@ func scraper() {
 	d.Visit("https://www.travelmath.com/flying-time/from/" + tempTimeSo + "/to/" + tempTimeDe)
 	print(count)
 	if count == 2 {
-		url := "https://priceline-com-provider.p.rapidapi.com/v2/flight/departures?sid=iSiX639&departure_date=2023-02-25&adults=1&origin_airport_code=" + source[0] + "&destination_airport_code=" + source[1] + "&results_per_page=1"
+		url := "https://priceline-com-provider.p.rapidapi.com/v2/flight/departures?sid=iSiX639&departure_date=" + sourceDate + "&adults=1&origin_airport_code=" + source[0] + "&destination_airport_code=" + source[1] + "&results_per_page=1&number_of_passengers=" + strconv.Itoa(passengerCount)
 
 		req, _ := http.NewRequest("GET", url, nil)
 		req.Header.Add("X-RapidAPI-Key", "47d048e09dmsh82922bd4aa60f6ep15bd6bjsnf22dbc12cd4b")
@@ -73,7 +79,6 @@ func scraper() {
 		defer res.Body.Close()
 		body, _ := ioutil.ReadAll(res.Body)
 
-		// fmt.Println(res)
 		flightData := strings.Split(string(body), ",")
 		for _, v := range flightData {
 			if strings.Contains(v, "baseline_total_fare_per_ticket") {
@@ -85,11 +90,6 @@ func scraper() {
 				tempIndex = strings.Index(v, ":") + 2
 				tempStrings = v[tempIndex : (len(v))-1]
 				bookedFlightInfo.flightAirline = tempStrings
-				//fmt.Println("\n", v)
-			} else if strings.Contains(v, "\"duration\"") {
-				tempIndex = strings.Index(v, ":") + 2
-				tempStrings = v[tempIndex : (len(v))-1]
-				bookedFlightInfo.flightTime = tempStrings
 			}
 		}
 	}
@@ -97,9 +97,8 @@ func scraper() {
 	fmt.Printf("%v", source)
 	fmt.Print("\n", bookedFlightInfo.flightAirline, "\n")
 	fmt.Print("\n", bookedFlightInfo.flightPrice, "\n")
+	fmt.Print("\n", bookedFlightInfo.flightPrice, "\n")
 	fmt.Print("\n", bookedFlightInfo.flightTime, "\n")
-
-}
-func hello() {
-	print("wassup")
+	fmt.Print("\n", bookedFlightInfo.flightTime, "\n")
+	return (bookedFlightInfo)
 }

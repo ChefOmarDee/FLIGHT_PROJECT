@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-contrib/cors"
@@ -13,21 +14,24 @@ type ticket struct {
 	SourceDate          string `json:"sourcedate"`
 	PassengerCount      int    `json:"passengercount"`
 }
-
-var tickets = []ticket{
-	{
-		SourceLocation:      "Vero Beach, FL",
-		DestinationLocation: "Kansas City, MO",
-		SourceDate:          "12/12/2022",
-		PassengerCount:      1,
-	},
+type bookedTicket struct {
+	SourceLocation      string `json:"sourcelocation"`
+	DestinationLocation string `json:"destinationlocation"`
+	SourceDate          string `json:"sourcedate"`
+	PassengerCount      int    `json:"passengercount"`
+	FlightPrice         int    `json:"flightprice"`
+	FlightTime          string `json:"flighttime"`
+	FlightAirline       string `json:"flightairline"`
 }
 
+var tickets = []bookedTicket{}
+var flightBooking bookedTicket
+var userBookedTicket flightInfo
+
 func main() {
-	scraper()
 	router := gin.Default()
 	router.Use(cors.Default())
-	router.GET("/tickets", GetTicket)
+	router.GET("/gettickets", GetTicket)
 	router.POST("/tickets", AddTicket)
 	router.Run("localhost:8080")
 }
@@ -41,6 +45,22 @@ func AddTicket(c *gin.Context) {
 	if err := c.BindJSON(&newTicket); err != nil {
 		return
 	}
-	tickets = append(tickets, newTicket)
+	print("\nyyyyyyyyyyyyyyyyy")
+
+	fmt.Printf("%T", newTicket)
+	print("\nyyyyyyyyyyyyyyyyy")
+
 	c.IndentedJSON(http.StatusCreated, newTicket)
+	userBookedTicket := scraper(newTicket.SourceLocation, newTicket.DestinationLocation, newTicket.SourceDate, newTicket.PassengerCount)
+	flightBooking.SourceLocation = newTicket.SourceLocation
+	flightBooking.FlightTime = userBookedTicket.flightTime
+	flightBooking.DestinationLocation = newTicket.DestinationLocation
+	flightBooking.FlightPrice = userBookedTicket.flightPrice
+	flightBooking.PassengerCount = newTicket.PassengerCount
+	flightBooking.SourceDate = newTicket.SourceDate
+	flightBooking.FlightAirline = userBookedTicket.flightAirline
+	print("\nyyyyyyyyyyyyyyyyy")
+	fmt.Print(flightBooking)
+	print("\nyyyyyyyyyyyyyyyyy")
+	tickets = append(tickets, flightBooking)
 }
