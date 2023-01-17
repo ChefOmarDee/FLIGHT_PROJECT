@@ -1,7 +1,6 @@
 // import './App.css';
 import React, { useEffect, useState } from 'react';
 import WebForm from './mods/WebForm';
-import GetData from './mods/GetData';
 
 function App() {
 
@@ -19,9 +18,7 @@ function App() {
   // console.log(obj)
   return (
     <React.Fragment>
-      <p>em</p>
       <WebForm/>
-      <GetData/>
     </React.Fragment>
   );
 }

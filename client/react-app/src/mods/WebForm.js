@@ -1,7 +1,20 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
+import GetData from './GetData'
 let WebForm =()=>{
+    let [obj, setObj] = useState([])
+    function timeout(delay) {
+      return new Promise( res => setTimeout(res, delay) );
+  }
+  async function getData() {
+    const actualData = await fetch('http://127.0.0.1:8080/gettickets')
+    let jsonActualData=await actualData.json()
+    setObj(jsonActualData)
+  }
+    useEffect(() => {
+      getData()
+    }, [])
     console.log("yippie")
-    let submitHandler=(event)=>{
+    async function submitHandler(event){
         event.preventDefault();
         let formData={
             destinationlocation:(event.target[2].value+event.target[3].value),
@@ -20,9 +33,12 @@ let WebForm =()=>{
             let userFlightDataInJson= await userFlightData.json()
         }   
         submitForm(formData)
+        await timeout(6000)
+        getData()
     }
     return (
     <React.Fragment>
+        {obj.flightprice}
         <form onSubmit={submitHandler}>
             <label >Enter Flight Origin City</label>
             <input type="text"></input>
@@ -142,6 +158,7 @@ let WebForm =()=>{
             <input type="text" ></input>
             <input type="submit"></input>
         </form>  
+        {/* <GetData/> */}
     </React.Fragment>
     )
 }
