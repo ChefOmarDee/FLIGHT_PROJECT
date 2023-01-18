@@ -12,16 +12,16 @@ type ticket struct {
 	SourceLocation      string `json:"sourcelocation"`
 	DestinationLocation string `json:"destinationlocation"`
 	SourceDate          string `json:"sourcedate"`
-	PassengerCount      int    `json:"passengercount"`
 }
 type bookedTicket struct {
 	SourceLocation      string `json:"sourcelocation"`
 	DestinationLocation string `json:"destinationlocation"`
 	SourceDate          string `json:"sourcedate"`
-	PassengerCount      int    `json:"passengercount"`
 	FlightPrice         int    `json:"flightprice"`
 	FlightTime          string `json:"flighttime"`
 	FlightAirline       string `json:"flightairline"`
+	SourceIata          string `json:"sourceiata"`
+	DestIata            string `json:"destiata"`
 }
 
 // var tickets = bookedTicket{}
@@ -51,14 +51,15 @@ func AddTicket(c *gin.Context) {
 	print("\nyyyyyyyyyyyyyyyyy")
 
 	c.IndentedJSON(http.StatusCreated, newTicket)
-	userBookedTicket := scraper(newTicket.SourceLocation, newTicket.DestinationLocation, newTicket.SourceDate, newTicket.PassengerCount)
+	userBookedTicket := scraper(newTicket.SourceLocation, newTicket.DestinationLocation, newTicket.SourceDate)
 	flightBooking.SourceLocation = newTicket.SourceLocation
 	flightBooking.FlightTime = userBookedTicket.flightTime
 	flightBooking.DestinationLocation = newTicket.DestinationLocation
 	flightBooking.FlightPrice = userBookedTicket.flightPrice
-	flightBooking.PassengerCount = newTicket.PassengerCount
 	flightBooking.SourceDate = newTicket.SourceDate
 	flightBooking.FlightAirline = userBookedTicket.flightAirline
+	flightBooking.SourceIata = userBookedTicket.sourceIata
+	flightBooking.DestIata = userBookedTicket.destIata
 	print("\nyyyyyyyyyyyyyyyyy")
 	fmt.Print(flightBooking)
 	print("\nyyyyyyyyyyyyyyyyy")

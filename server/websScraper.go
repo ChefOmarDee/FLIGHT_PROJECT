@@ -14,9 +14,11 @@ type flightInfo struct {
 	flightPrice   int
 	flightTime    string
 	flightAirline string
+	sourceIata    string
+	destIata      string
 }
 
-func scraper(sourceLocation string, destinationLocation string, sourceDate string, passengerCount int) flightInfo {
+func scraper(sourceLocation string, destinationLocation string, sourceDate string) flightInfo {
 	var source []string
 	sourceLocation = strings.ReplaceAll(sourceLocation, " ", "+")
 	destinationLocation = strings.ReplaceAll(destinationLocation, " ", "+")
@@ -68,7 +70,7 @@ func scraper(sourceLocation string, destinationLocation string, sourceDate strin
 	d.Visit("https://www.travelmath.com/flying-time/from/" + tempTimeSo + "/to/" + tempTimeDe)
 	print(count)
 	if count == 2 {
-		url := "https://priceline-com-provider.p.rapidapi.com/v2/flight/departures?sid=iSiX639&departure_date=" + sourceDate + "&adults=1&origin_airport_code=" + source[0] + "&destination_airport_code=" + source[1] + "&results_per_page=1&number_of_passengers=" + strconv.Itoa(passengerCount)
+		url := "https://priceline-com-provider.p.rapidapi.com/v2/flight/departures?sid=iSiX639&departure_date=" + sourceDate + "&adults=1&origin_airport_code=" + source[0] + "&destination_airport_code=" + source[1] + "&results_per_page=1"
 
 		req, _ := http.NewRequest("GET", url, nil)
 		req.Header.Add("X-RapidAPI-Key", "47d048e09dmsh82922bd4aa60f6ep15bd6bjsnf22dbc12cd4b")
@@ -90,6 +92,8 @@ func scraper(sourceLocation string, destinationLocation string, sourceDate strin
 				tempIndex = strings.Index(v, ":") + 2
 				tempStrings = v[tempIndex : (len(v))-1]
 				bookedFlightInfo.flightAirline = tempStrings
+				bookedFlightInfo.sourceIata = source[0]
+				bookedFlightInfo.destIata = source[1]
 			}
 		}
 	}

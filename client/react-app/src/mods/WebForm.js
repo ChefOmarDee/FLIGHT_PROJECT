@@ -16,7 +16,6 @@ let WebForm =()=>{
 
         let formData={
             destinationlocation:(event.target[2].value+event.target[3].value),
-            passengercount:3,
             sourcedate:(event.target[4].value),
             sourcelocation:(event.target[0].value+event.target[1].value)
         }
@@ -53,8 +52,6 @@ let WebForm =()=>{
                         <USAStates/>
                         <label >Enter Flight Date</label>
                         <input type="date" defaultValue= {new Date().toISOString().split('T')[0].toString()} max={new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0].toString()} min={new Date().toISOString().split('T')[0].toString()} required pattern="\d{2}-\d{2}-\d{4}"/>
-                        <label>Enter Flight Passenger Count</label>
-                        <input type="text" ></input>
                         <input type="submit"></input>
                         </form>  
                         <p>
@@ -81,8 +78,6 @@ let WebForm =()=>{
             <USAStates/>
             <label >Enter Flight Date</label>
             <input type="date" defaultValue= {new Date().toISOString().split('T')[0].toString()} max={new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0].toString()} min={new Date().toISOString().split('T')[0].toString()} required pattern="\d{2}-\d{2}-\d{4}"/>
-            <label>Enter Flight Passenger Count</label>
-            <input type="text" ></input>
             <input type="submit"></input>
         </form>  
     </React.Fragment>
