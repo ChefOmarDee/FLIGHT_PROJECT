@@ -1,6 +1,6 @@
 import React,{useState, useEffect} from 'react'
 import '../cssForMods/Form.css';
-import USAStates from './USAStates'
+import FormOptions from './FormOptions';
 let WebForm =()=>{
     let [isFormSent,setIsFormSent]=useState(0)
     let [obj, setObj] = useState([])
@@ -41,30 +41,10 @@ let WebForm =()=>{
             return(
             <React.Fragment >
                 <form className='aftersubmit'  onSubmit={submitHandler}>
-                    <label >Enter Flight Origin City</label>
-                    <br/>
-                    <input type="text" className='input'></input>
-                    <br/>
-                    <label>Enter Flight Origin State</label>
-                    <br/>
-                    <USAStates/>
-                    <br/>
-                    <label >Enter Flight Destination City</label>
-                    <br/>
-                    <input type="text" className='input'></input>
-                    <br/>
-                    <label>Enter Flight Destination State</label>
-                    <br/>
-                    <USAStates/>
-                    <br/>
-                    <label >Enter Flight Date</label>
-                    <br/>
-                    <input type="date" className='input' defaultValue= {new Date().toISOString().split('T')[0].toString()} max={new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0].toString()} min={new Date().toISOString().split('T')[0].toString()} required pattern="\d{2}-\d{2}-\d{4}"/>
-                    <br/>
-                    <input type="submit" className='submit'></input>
+                    <FormOptions/>
                 </form>  
                 <p className='failed-output'>
-                    Could not find results, this could be because there are no direct flights available or because improper Spelling/Capitalization has been used
+                    Could not find results, this could be because there are no direct flights available or because improper spelling/capitalization has been used
                 </p>
                 </React.Fragment>
                 )
@@ -73,27 +53,7 @@ let WebForm =()=>{
             return (
                 <React.Fragment >
                 <form className='aftersubmit'  onSubmit={submitHandler}>
-                    <label >Enter Flight Origin City</label>
-                    <br/>
-                    <input type="text" className='input'></input>
-                    <br/>
-                    <label>Enter Flight Origin State</label>
-                    <br/>
-                    <USAStates/>
-                    <br/>
-                    <label >Enter Flight Destination City</label>
-                    <br/>
-                    <input type="text" className='input'></input>
-                    <br/>
-                    <label>Enter Flight Destination State</label>
-                    <br/>
-                    <USAStates/>
-                    <br/>
-                    <label >Enter Flight Date</label>
-                    <br/>
-                    <input type="date" className='input' defaultValue= {new Date().toISOString().split('T')[0].toString()} max={new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0].toString()} min={new Date().toISOString().split('T')[0].toString()} required pattern="\d{2}-\d{2}-\d{4}"/>
-                    <br/>
-                    <input type="submit" className='submit'></input>
+                <FormOptions/>
                 </form>  
                 <p className='output'>
                 <span className='output-text'>
@@ -127,27 +87,7 @@ let WebForm =()=>{
     return (
     <React.Fragment >
         <form className='form' onSubmit={submitHandler}>
-            <label >Enter Flight Origin City</label>
-            <br/>
-            <input type="text" className='input'></input>
-            <br/>
-            <label>Enter Flight Origin State</label>
-            <br/>
-            <USAStates/>
-            <br/>
-            <label >Enter Flight Destination City</label>
-            <br/>
-            <input type="text" className='input'></input>
-            <br/>
-            <label>Enter Flight Destination State</label>
-            <br/>
-            <USAStates/>
-            <br/>
-            <label >Enter Flight Date</label>
-            <br/>
-            <input type="date" className='input' defaultValue= {new Date().toISOString().split('T')[0].toString()} max={new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0].toString()} min={new Date().toISOString().split('T')[0].toString()} required pattern="\d{2}-\d{2}-\d{4}"/>
-            <br/>
-            <input type="submit" className='submit'></input>
+            <FormOptions/>
         </form>  
     </React.Fragment>
     )
