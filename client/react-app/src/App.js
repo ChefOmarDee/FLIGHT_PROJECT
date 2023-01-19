@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react';
 import WebForm from './mods/WebForm';
 
 function App() {
+  
   return (
-    <React.Fragment>
-       <div style={{ lineHeight : 10, padding: 20 }}>
-      <WebForm/>
+    <React.Fragment >
+      <div style={{ lineHeight : 2, padding: 2 }}>
+        <WebForm />
       </div>
     </React.Fragment>
   );

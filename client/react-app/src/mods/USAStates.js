@@ -1,9 +1,11 @@
 import React from "react"
-// import '../cssForMods/Form.css';
+import '../cssForMods/Form.css'
 let USAStates=()=>{
 return(
     <React.Fragment>
-        <select>
+        <select className="input">
+            <option disabled selected value> -- select an option -- </option>
+
                             <option value="AL">AL</option>
                             <option value="AK">AK</option>
                             <option value="AR">AR</option>
