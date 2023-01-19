@@ -66,25 +66,27 @@ let WebForm =()=>{
                 </form>  
                 <p className='output'>
                 <span className='output-text'>
-                    <span>
-                        {obj.sourceiata}
-                    </span>
-                        <br/>
-                    <span>
+                <br/>
+                    <p className='output-text'>
+                            Origin Iata:    
+                        {  obj.sourceiata}
+                    </p>
+                    <p className='output-text'>
+                    Destination Iata:  
                         {obj.destiata}
-                    </span>
-                        <br/>
-                    <span>
+                    </p>
+                        <p className='output-text'>
+                        Cheapest Airline:
                         {obj.flightairline}
-                        </span>
-                        <br/>
-                    <span>
+                        </p>
+                    <p className='output-text'>
+                        Cheapest Flight Price:
                         {obj.flightprice}
-                    </span>
-                        <br/>
-                    <span>
+                    </p>
+                    <p className='output-text'>
+                        Flight Time:
                         {obj.flighttime}
-                    </span>
+                    </p>
                 </span>
                 </p>
                 </React.Fragment>
