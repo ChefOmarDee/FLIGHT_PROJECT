@@ -14,7 +14,7 @@ let WebForm =()=>{
     async function submitHandler(event){
         event.preventDefault();
 
-        let formData={
+        var formData={
             destinationlocation:(event.target[2].value+event.target[3].value),
             sourcedate:(event.target[4].value),
             sourcelocation:(event.target[0].value+event.target[1].value)
@@ -37,8 +37,39 @@ let WebForm =()=>{
     useEffect(() => {
         getData()
       }, [])
-  
-        if(isFormSent>=1){
+      if(isFormSent>=1&&(obj.flightprice===0||obj.flighttime[0]==='E'||(obj.destinationlocation).length===2||(obj.sourcelocation).length===2)){
+            return(
+            <React.Fragment >
+                <form className='aftersubmit'  onSubmit={submitHandler}>
+                    <label >Enter Flight Origin City</label>
+                    <br/>
+                    <input type="text" className='input'></input>
+                    <br/>
+                    <label>Enter Flight Origin State</label>
+                    <br/>
+                    <USAStates/>
+                    <br/>
+                    <label >Enter Flight Destination City</label>
+                    <br/>
+                    <input type="text" className='input'></input>
+                    <br/>
+                    <label>Enter Flight Destination State</label>
+                    <br/>
+                    <USAStates/>
+                    <br/>
+                    <label >Enter Flight Date</label>
+                    <br/>
+                    <input type="date" className='input' defaultValue= {new Date().toISOString().split('T')[0].toString()} max={new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0].toString()} min={new Date().toISOString().split('T')[0].toString()} required pattern="\d{2}-\d{2}-\d{4}"/>
+                    <br/>
+                    <input type="submit" className='submit'></input>
+                </form>  
+                <p className='failed-output'>
+                    Could not find results, this could be because there are no direct flights available or because improper Spelling/Capitalization has been used
+                </p>
+                </React.Fragment>
+                )
+      }
+        else if(isFormSent>=1){
             return (
                 <React.Fragment >
                 <form className='aftersubmit'  onSubmit={submitHandler}>
